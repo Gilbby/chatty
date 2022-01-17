@@ -132,7 +132,7 @@
           </div>
           <div class="type_msg">
             <div class="input_msg_write">
-              <input type="text" class="write_msg" placeholder="Type a message" />
+              <input @keyup.enter="saveMessage" v-model="message" type="text" class="write_msg" placeholder="Type a message" />
               <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
             </div>
           </div>
@@ -146,11 +146,29 @@
 </template>
 
 <script>
-
+import { collection, addDoc } from "firebase/firestore"; 
 
 export default {
-  components: {
-    
+  data(){
+    return{
+      message:null
+    }
+  },
+  methods:{
+    saveMessage(){
+      //save data to firestore
+              
+              
+              const colref = collection(db, 'chat')
+              addDoc(colref,{
+                message:this.message
+
+              })
+
+              
+
+
+    }
   }
 }
 </script>
